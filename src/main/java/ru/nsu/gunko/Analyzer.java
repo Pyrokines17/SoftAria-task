@@ -4,18 +4,18 @@ import java.net.URL;
 import java.util.*;
 
 public class Analyzer {
-    public static Vector<Vector<URL>> fullAnalysis(PageStates pageStates) {
+    public static Vector<Deque<URL>> fullAnalysis(PageStates pageStates) {
         Map<URL, String> yesterdaysPages = pageStates.getYesterdaysPages();
         Set<URL> urlsYesterday = yesterdaysPages.keySet();
 
         Map<URL, String> todaysPages = pageStates.getTodaysPages();
         Set<URL> urlsToday = todaysPages.keySet();
 
-        Vector<Vector<URL>> fullAnalysis = new Vector<>(3);
+        Vector<Deque<URL>> fullAnalysis = new Vector<>(3);
         // 0 - disappeared pages, 1 - new pages, 2 - changed pages
 
         for (int i = 0; i < 3; ++i) {
-            fullAnalysis.add(new Vector<>());
+            fullAnalysis.add(new ArrayDeque<>());
         }
 
         for (URL url : urlsYesterday) {
@@ -35,11 +35,11 @@ public class Analyzer {
         return fullAnalysis;
     }
 
-    public static Vector<URL> disappearedPages(PageStates pageStates) {
+    public static Deque<URL> disappearedPages(PageStates pageStates) {
         Map<URL, String> todaysPages = pageStates.getTodaysPages();
         Set<URL> urls = pageStates.getYesterdaysPages().keySet();
 
-        Vector<URL> disappearedPages = new Vector<>();
+        Deque<URL> disappearedPages = new ArrayDeque<>();
 
         for (URL url : urls) {
             if (!todaysPages.containsKey(url)) {
@@ -50,11 +50,11 @@ public class Analyzer {
         return disappearedPages;
     }
 
-    public static Vector<URL> newPages(PageStates pageStates) {
+    public static Deque<URL> newPages(PageStates pageStates) {
         Map<URL, String> yesterdaysPages = pageStates.getYesterdaysPages();
         Set<URL> urls = pageStates.getTodaysPages().keySet();
 
-        Vector<URL> newPages = new Vector<>();
+        Deque<URL> newPages = new ArrayDeque<>();
 
         for (URL url : urls) {
             if (!yesterdaysPages.containsKey(url)) {
@@ -65,12 +65,12 @@ public class Analyzer {
         return newPages;
     }
 
-    public static Vector<URL> changedPages(PageStates pageStates) {
+    public static Deque<URL> changedPages(PageStates pageStates) {
         Map<URL, String> yesterdaysPages = pageStates.getYesterdaysPages();
         Map<URL, String> todaysPages = pageStates.getTodaysPages();
         Set<URL> urls = yesterdaysPages.keySet();
 
-        Vector<URL> changedPages = new Vector<>();
+        Deque<URL> changedPages = new ArrayDeque<>();
 
         for (URL url : urls) {
             if (todaysPages.containsKey(url) &&

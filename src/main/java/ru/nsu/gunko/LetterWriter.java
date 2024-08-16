@@ -1,13 +1,13 @@
 package ru.nsu.gunko;
 
 import java.net.URL;
-import java.util.Vector;
+import java.util.*;
 
 public class LetterWriter {
     public static String writeLetter(PageStates pageStates, String fullName) {
         StringBuilder letter = new StringBuilder();
 
-        Vector<Vector<URL>> fullAnalysis = Analyzer.fullAnalysis(pageStates);
+        Vector<Deque<URL>> fullAnalysis = Analyzer.fullAnalysis(pageStates);
         // 0 - disappeared pages, 1 - new pages, 2 - changed pages
 
         letter.append("Здравствуйте, дорогая(ой) ").append(fullName).append("\n\n");
@@ -22,7 +22,7 @@ public class LetterWriter {
         return letter.toString();
     }
 
-    private static String writeList(Vector<URL> urls) {
+    private static String writeList(Deque<URL> urls) {
         StringBuilder list = new StringBuilder();
 
         for (URL url : urls) {
